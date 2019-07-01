@@ -1,0 +1,48 @@
+import cv2
+cap=cv2.VideoCapture(0)
+print(cap.isOpened())
+
+
+#adding plugin
+plugin=cv2.VideoWriter_fourcc(*'XVID')
+#saving video
+output=cv2.VideoWriter('class.mp4',plugin,20,(480,640))
+
+
+#now we can read input from camera
+print(cap.read())		#it will take first picture
+
+status,img=cap.read()
+status1,img1=cap.read()
+
+#now showing
+cv2.imshow('liveimage',img)
+cv2.imshow('liveimage',img1)
+
+##
+while cap.isOpened():
+	status,frame=cap.read()
+	graying=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
+	print(frame.shape)
+	cv2.imshow('live',frame)
+	cv2.imshow('livegray',graying)
+	
+	##now we can draw all these patterns
+	#lines
+	cv2.line(frame,(0,0),(200,300),(0,255,0),3)
+	#rectangle
+	cv2.rectangle(frame,(50,50),(150,200),(0,0,255),2)
+	#circle
+	cv2.circle(frame,(200,300),20,(0,33,123),2)
+
+	cv2.imshow('live',frame)
+	
+
+
+	if cv2.waitKey(10) & 0xff == ord('q') :
+		break
+	cv2.waitkey(0)
+
+
+cv2.destroyAllWindows()
+cap.release()
